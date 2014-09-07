@@ -34,29 +34,6 @@ angular.module("angular-paginate", [])
     };
 
 
-    // must be called first to initialise pages
-    var createPages = function(_results_, _numberPerPage_) {
-
-        // initialisation each time pagination is used
-        pageNumbers = [];
-        results = _results_;
-        numberPerPage = _numberPerPage_;
-        currentPage = 1;
-
-        var pageMax = Math.ceil(results.length / numberPerPage);
-        // sets maximum page numbers to limit of 14
-        var pageLimit = 14;
-        pageMax = (pageMax > pageLimit) ? pageLimit : pageMax;
-
-        // array to store page numbers
-        for(var i = 1; i <= pageMax; i++){
-            pageNumbers.push(i);
-        };
-
-        return pageNumbers;
-    };
-
-
     $scope.paginationInit = function(model, limit){
         $scope.pageNumbers = createPages(model, limit);
         $scope.pageContent = getPageContent(1);
@@ -74,11 +51,41 @@ angular.module("angular-paginate", [])
     };
 })
 
+.directive("createPagination", function(){
+    return {
+        restrict: "A",
+        scope: {
+            results: "&",
+            numberPerPage: "&",
+            pages: "=",
+            pageLimit: "&",                  // optional: set the maximum page numbers to 15
+            binding: "@"                     // optional: default pagination creation on click event. set to bind to any other type of event
+        },
+        link: function(scope, elem, attrs){
+            elem.bind("click", function(){ 
+                currentPage = 1
+                
+                // gets last page number
+                var pageMax = Math.ceil(scope.results.length / scope.numberPerPage);
+               
+                // sets maximum number of page numbers to 15 if option not provided
+                if(!scope.pageLimit) scope.pageLimit = 15;
+                pageMax = (pageMax > scope.pageLimit) ? scope.pageLimit : pageMax;
+
+                // array to store page numbers
+                for(var i = 1; i <= pageMax; i++){
+                    scope.pageNumbers.push(i);
+                };
+            });
+        }
+    };
+})
+
 .directive("pagination", function(){
     return {
         restrict: "A",
         scope: {
-            results: "&results",  
+            results: "&",  
             page: "@",
             numberPerPage: "&",
             pageContent: "=",
