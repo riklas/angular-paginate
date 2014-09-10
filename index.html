@@ -21,14 +21,13 @@
         <div style="position: absolute; top: 20%; left:40%;" ng-controller="PaginationController">
 
         <button class="button" create-pages results="results" number-per-page="5" ng-click="getResults();showPaginate=true" pages="pages" page-content="pageContent">Click Me!</button> 
-            {{pages}}
-            {{pageContent}}
+
             <div ng-show="showPaginate">
                 
                 <ul style="position: relative; top: 30px" class="pagination" >
                     <li><a pagination-left href>&laquo;</a></li>
                     
-                    <li pagination results="results" pages="pages" page="{{page}}" number-per-page="5" ng-repeat="page in pages">
+                    <li pagination page-content="pageContent" page="{{page}}" ng-repeat="page in pages">
                         <a>{{page}}</a>
                     </li>
                     
@@ -42,7 +41,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="content in pageContent track by $index">
+                        <tr ng-repeat="content in pageContent">
                             <td>{{content.name}}</td>
                             <td>{{content.avg}}</td>
                         </tr>

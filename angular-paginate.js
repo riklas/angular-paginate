@@ -7,36 +7,65 @@ angular.module("angular-paginate", [])
     // $scope.pc = []
 
     $scope.getResults = function(){
-        $scope.results = [{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2}];    
+        $scope.results = [{name: 'a', avg: 3},{name: 'a', avg: 3},{name: 'a', avg: 3},{name: 'a', avg: 3},{name: 'a', avg: 3},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2}];    
     }
     
 }])
 
-.controller("PaginationController", ["$scope", function($scope){
-   
+.factory("stateService", function(){
     
-    // $scope.pageContent = [];
+    var numberPerPage;
+    var results;
 
-    // params : object with results, numberPerPage, page attributes
+    return {
+        setNumberPerPage: function(_numberPerPage_){
+            numberPerPage = parseInt(_numberPerPage_);
+        },
+
+        getNumberPerPage: function(){
+            return numberPerPage;
+        },
+
+        setResults: function(_results_){
+            results = _results_.slice(0);
+        },
+
+        getResults: function(){
+            return results;
+        }
+    };
+})
+
+.controller("PaginationController", ["$scope", "stateService", function($scope, stateService){
+   
+    $scope.setNumberPerPage = function(numberPerPage){
+        stateService.setNumberPerPage(numberPerPage);
+    }
+
+    $scope.setResults = function(results){
+        stateService.setResults(results);
+    }
+
+    // params : object with page attributes
     $scope.getPageContent = function(params){
+        var numberPerPage = stateService.getNumberPerPage();
+        var results = stateService.getResults();
+        var startIndex = numberPerPage * params.page - numberPerPage;
 
-        var startIndex = params.numberPerPage * params.page - params.numberPerPage;
-        var newContent = [];
+        while(params.pageContent.length > 0) params.pageContent.pop();   
         
-        if(params.results){
+        if(results){
 
             // if there are less results than number per page, display all results in pageContent
-            if((startIndex + params.numberPerPage - 1) > params.results.length){
-                for(var i = startIndex; i < params.results.length; i++){
-                    newContent.push(params.results[i]);
+            if((startIndex + numberPerPage - 1) > results.length){
+                for(var i = startIndex; i < results.length; i++){
+                    params.pageContent.push(results[i]);
                 }
             } else {
-                for(var i = startIndex; i < (params.numberPerPage + startIndex); i++){
-                    newContent.push(params.results[i]);
+                for(var i = startIndex; i < (numberPerPage + startIndex); i++){
+                    params.pageContent.push(results[i]);
                 };
             };
-
-            return newContent;            
         };
     };
     
@@ -94,7 +123,7 @@ angular.module("angular-paginate", [])
         link: function(scope, elem, attrs){
             elem.bind("click", function(){ 
                 scope.pages = [];
-                scope.pageContent = [];
+
                 var currentPage = 1;
                 
                 // gets last page number
@@ -109,7 +138,11 @@ angular.module("angular-paginate", [])
                         scope.pages.push(i);
                 };
                 
-                scope.pageContent = scope.getPageContent({results: scope.results, page: currentPage, numberPerPage: parseInt(scope.numberPerPage)})
+                scope.setNumberPerPage(scope.numberPerPage);
+
+                scope.setResults(scope.results);
+
+                scope.getPageContent({page: currentPage, pageContent: scope.pageContent});
 
                 scope.$apply();         // apply changes
             });
@@ -121,23 +154,19 @@ angular.module("angular-paginate", [])
     return {
         restrict: "A",
         scope: {
-            results: "=",  
-            page: "@",
-            numberPerPage: "@",
             pageContent: "=",
-            pageLimit: "@",             // optional: set the maximum page numbers to 15
-            binding: "@",               // optional: default pagination creation on click event. set to bind to any other type of event
+            page: "@",
+            // pageLimit: "@",             // optional: set the maximum page numbers to 15
+            // binding: "@",               // optional: default pagination creation on click event. set to bind to any other type of event
         },
         controller: "PaginationController",
         link: function(scope, elem, attrs){
             elem.bind("click", function(){
-                console.log(scope.pageContent);
-                a = [{name: 't', avg: 1}];
-                scope.pageContent = a.slice(0);
-                scope.$apply();
-                // scope.pageContent = scope.getPageContent({results: scope.results, page: scope.page, numberPerPage: parseInt(scope.numberPerPage)});
-                console.log(scope.pageContent);
 
+                scope.getPageContent({results: scope.results, page: parseInt(scope.page), pageContent: scope.pageContent });
+
+                console.log(scope.pageContent[0]);
+                scope.$apply();         // apply changes
             }); 
         }
     };
