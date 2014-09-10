@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="angular-paginate">
+    <!-- css -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <title>angular-pagination</title>
+    <style>
+        .pagination:hover{
+            cursor: pointer
+        }
+        
+        button{
+            color: white;
+            background: blue;
+        }
+        .table{
+            width: 400px;
+        }
+    </style>
+    <div ng-controller="MainController">
+        <p>Pagination Controlled with a button</p>   
+        <div style="position: absolute; top: 20%; left:40%;" ng-controller="PaginationController">
+
+        <button class="button" create-pages results="results" number-per-page="5" ng-click="getResults();showPaginate=true" pages="pages" page-content="pageContent">Click Me!</button> 
+            {{pages}}
+            {{pageContent}}
+            <div ng-show="showPaginate">
+                
+                <ul style="position: relative; top: 30px" class="pagination" >
+                    <li><a pagination-left href>&laquo;</a></li>
+                    
+                    <li pagination results="results" pages="pages" page="{{page}}" number-per-page="5" ng-repeat="page in pages">
+                        <a>{{page}}</a>
+                    </li>
+                    
+                    <li><a pagination-right href>&raquo;</a></li>
+                </ul>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Average</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="content in pageContent track by $index">
+                            <td>{{content.name}}</td>
+                            <td>{{content.avg}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- js -->
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="angular-paginate.js"></script>
+</html>
