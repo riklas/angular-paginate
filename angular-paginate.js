@@ -4,7 +4,19 @@ angular.module("angular-paginate", [])
     
     $scope.pages = [];
     $scope.pageContent = [];
+    $scope.results = [  {name:"MSDhoni", avg: 67.72},
+                            {name:"TMDilshan", avg: 54.91},
+                            {name:"ABdeVilliers", avg: 53.73},
+                            {name:"GJBailey", avg: 53.24},
+                            {name:"VKohli", avg: 50.06},
+                            {name:"KCSangakkara", avg: 50.05},
+                            {name:"LRTaylor", avg: 47.86},
+                            {name:"Misbah-ul-Haq", avg: 47.03},
+                            {name:"SDhawan", avg: 46.76},
+                            {name:"RAJadeja", avg: 46.41} ];    
 
+    
+    // called to simulate dynamic results
     $scope.getResults = function(){
         $scope.results = [  {name:"MSDhoni", avg: 67.72},
                             {name:"TMDilshan", avg: 54.91},
@@ -142,11 +154,16 @@ angular.module("angular-paginate", [])
             numberPerPage: "@",
             pages: "=",
             pageContent: "=",
-            pageLimit: "@"                      // optional: default maximum page numbers = 15
+            pageLimit: "@",                  // optional: default maximum page numbers = 15
+            binding: "@"                     // optional: default pagination creation = on 'click'
         },
         controller: "PaginationController",
         link: function(scope, elem, attrs){
-            elem.bind("click", function(){ 
+            
+            // check if binding attribute present otherwise default to click
+            if(!scope.binding) scope.binding = "click";
+            
+            elem.bind(scope.binding, function(){ 
                 scope.pages = [];
                 
                 // gets last page number
@@ -189,8 +206,7 @@ angular.module("angular-paginate", [])
     return {
         restrict: "A",
         scope: {
-            page: "@",
-            // binding: "@",               // optional: default pagination creation on click event. set to bind to any other type of event
+            page: "@"
         },
         controller: "PaginationController",
         link: function(scope, elem, attrs){
