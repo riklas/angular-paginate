@@ -4,18 +4,28 @@ angular.module("angular-paginate", [])
     
     $scope.pages = [];
     $scope.pageContent = [];
+
     // $scope.pc = []
 
     $scope.getResults = function(){
-        $scope.results = [{name: 'a', avg: 3},{name: 'a', avg: 3},{name: 'a', avg: 3},{name: 'a', avg: 3},{name: 'a', avg: 3},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2},{name: 'a', avg: 2}];    
+        $scope.results = [  {name:"MSDhoni", avg: 67.72},
+                            {name:"TMDilshan", avg: 54.91},
+                            {name:"ABdeVilliers", avg: 53.73},
+                            {name:"GJBailey", avg: 53.24},
+                            {name:"VKohli", avg: 50.06},
+                            {name:"KCSangakkara", avg: 50.05},
+                            {name:"LRTaylor", avg: 47.86},
+                            {name:"Misbah-ul-Haq", avg: 47.03},
+                            {name:"SDhawan", avg: 46.76},
+                            {name:"RAJadeja", avg: 46.41} ];    
     }
-    
 }])
 
 .factory("stateService", function(){
     
     var numberPerPage;
     var results;
+    var currentPage;
 
     return {
         setNumberPerPage: function(_numberPerPage_){
@@ -32,12 +42,24 @@ angular.module("angular-paginate", [])
 
         getResults: function(){
             return results;
+        },
+
+        setCurrentPage: function(_currentPage_){
+            currentPage = _currentPage_;
+        },
+
+        getCurrentPage: function(){
+            return currentPage;
         }
     };
 })
 
 .controller("PaginationController", ["$scope", "stateService", function($scope, stateService){
-   
+    
+    $scope.setCurrentPage = function(currentPage){
+        stateService.setCurrentPage(currentPage);
+    }
+
     $scope.setNumberPerPage = function(numberPerPage){
         stateService.setNumberPerPage(numberPerPage);
     }
@@ -117,14 +139,15 @@ angular.module("angular-paginate", [])
             results: "=",       
             numberPerPage: "@",
             pages: "=",
-            pageContent: "="
+            pageContent: "=",
+            currentPage: "="
         },
         controller: "PaginationController",
         link: function(scope, elem, attrs){
             elem.bind("click", function(){ 
                 scope.pages = [];
 
-                var currentPage = 1;
+                // scope.currentPage = 1;
                 
                 // gets last page number
                 var pageMax = Math.ceil(scope.results.length / parseInt(scope.numberPerPage));
@@ -142,7 +165,7 @@ angular.module("angular-paginate", [])
 
                 scope.setResults(scope.results);
 
-                scope.getPageContent({page: currentPage, pageContent: scope.pageContent});
+                scope.getPageContent({page: scope.currentPage, pageContent: scope.pageContent});
 
                 scope.$apply();         // apply changes
             });
