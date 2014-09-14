@@ -11,3 +11,5 @@ Can be plugged into any css framework/use your own styles for pagination.
 - Supports static or dynamic data sets (e.g. data populated through REST calls)
 
 See examples on how it has been used with twitter bootstrap css.
+
+http://jsfiddle.net/e3bq15kj/2/
