@@ -25,6 +25,7 @@ angular.module("angular-paginate", [])
     var results;
     var currentPage;
     var pageMax;
+    var pageContent;
 
     return {
         setNumberPerPage: function(_numberPerPage_){
@@ -57,6 +58,14 @@ angular.module("angular-paginate", [])
 
         getPageMax: function(){
             return pageMax;
+        },
+
+        setPageContent: function(_pageContent_){
+            pageContent = _pageContent_;
+        },
+
+        getPageContent: function(){
+            return pageContent;
         }
     };
 })
@@ -95,24 +104,28 @@ angular.module("angular-paginate", [])
         stateService.setResults(results);
     }
 
-    // params : object with page attributes
-    $scope.getPageContent = function(params){
+    $scope.setPageContent = function(pageContent){
+        stateService.setPageContent(pageContent);
+    }
+
+    $scope.getPageContent = function(page){
         var numberPerPage = stateService.getNumberPerPage();
         var results = stateService.getResults();
-        var startIndex = numberPerPage * params.page - numberPerPage;
+        var startIndex = numberPerPage * page - numberPerPage;
+        var pageContent = stateService.getPageContent();
 
-        while(params.pageContent.length > 0) params.pageContent.pop();      // clear previous page content 
+        while(pageContent.length > 0) pageContent.pop();      // clear previous page content 
         
         if(results){
 
             // if there are less results than number per page, display all results in pageContent
             if((startIndex + numberPerPage - 1) > results.length){
                 for(var i = startIndex; i < results.length; i++){
-                    params.pageContent.push(results[i]);
+                    pageContent.push(results[i]);
                 }
             } else {
                 for(var i = startIndex; i < (numberPerPage + startIndex); i++){
-                    params.pageContent.push(results[i]);
+                    pageContent.push(results[i]);
                 };
             };
         };
@@ -129,7 +142,7 @@ angular.module("angular-paginate", [])
             numberPerPage: "@",
             pages: "=",
             pageContent: "=",
-            // pageLimit: "@",             // optional: set the maximum page numbers to 15
+            pageLimit: "@"                      // optional: default maximum page numbers = 15
         },
         controller: "PaginationController",
         link: function(scope, elem, attrs){
@@ -137,11 +150,11 @@ angular.module("angular-paginate", [])
                 scope.pages = [];
                 
                 // gets last page number
-                var pageMax = Math.ceil(scope.results.length / parseInt(scope.numberPerPage));
+                var pageMax = Math.ceil(scope.results.length / parseInt(scope.numberPerPage));                
                
                 // sets maximum number of page numbers to 15 if option not provided
                 if(!scope.pageLimit) scope.pageLimit = 15;
-                pageMax = (pageMax > scope.pageLimit) ? scope.pageLimit : pageMax;
+                pageMax = (pageMax > parseInt(scope.pageLimit)) ? parseInt(scope.pageLimit) : pageMax;
 
                 // // array to store page numbers
                 for(var i = 1; i <= pageMax; i++){
@@ -154,13 +167,17 @@ angular.module("angular-paginate", [])
                 // set number of results per page
                 scope.setNumberPerPage(scope.numberPerPage);
 
+                // set page content variable
+                scope.setPageContent(scope.pageContent);
+
                 // results = data set
                 scope.setResults(scope.results);
 
                 // intialise current page as 1
                 scope.setCurrentPage(1);
 
-                scope.getPageContent({page: 1, pageContent: scope.pageContent});
+                // update pageContent with page 1
+                scope.getPageContent(1);
 
                 scope.$apply();         // apply changes
             });
@@ -172,7 +189,6 @@ angular.module("angular-paginate", [])
     return {
         restrict: "A",
         scope: {
-            pageContent: "=",
             page: "@",
             // binding: "@",               // optional: default pagination creation on click event. set to bind to any other type of event
         },
@@ -184,7 +200,7 @@ angular.module("angular-paginate", [])
                 scope.setCurrentPage(parseInt(scope.page));
 
                 // get content for selected page
-                scope.getPageContent({page: parseInt(scope.page), pageContent: scope.pageContent });
+                scope.getPageContent(parseInt(scope.page));
 
                 scope.$apply();         // apply changes
             }); 
@@ -195,18 +211,16 @@ angular.module("angular-paginate", [])
 .directive("paginationLeft", function(){
     return {
         restrict: "A",
-        scope: {
-            pageContent: "=",
-        },
+        scope: {},
         controller: "PaginationController",
         link: function(scope, elem, attrs){
             elem.bind("click", function(){
                 var currentPage = scope.getCurrentPage();
                 
                 if(currentPage !== 1){
-                    scope.setCurrentPage( --currentPage );                                           // move to previous page
-                    scope.getPageContent({page: currentPage, pageContent: scope.pageContent });      // reset content to previous page
-                    scope.$apply();     // apply changes
+                    scope.setCurrentPage( --currentPage );          // move to previous page
+                    scope.getPageContent(currentPage);              // reset content to previous page
+                    scope.$apply();                                 // apply changes
                 }
             });
         }
@@ -216,18 +230,16 @@ angular.module("angular-paginate", [])
 .directive("paginationRight", function(){
     return {
         restrict: "A",
-        scope: {
-            pageContent: "=",
-        },
+        scope: {},
         controller: "PaginationController",
         link: function(scope, elem, attrs){
             elem.bind("click", function(){
                 var currentPage = scope.getCurrentPage();
                 
                 if(currentPage !== scope.getPageMax()){
-                        scope.setCurrentPage(++currentPage);
-                        scope.getPageContent({page: currentPage, pageContent: scope.pageContent});
-                        scope.$apply();                 // apply changes                    
+                        scope.setCurrentPage(++currentPage);        // move to next page
+                        scope.getPageContent(currentPage);          // reset contents to next page
+                        scope.$apply();                             // apply changes
                 }
             });
         }

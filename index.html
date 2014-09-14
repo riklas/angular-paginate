@@ -20,19 +20,19 @@
         <p>Pagination Controlled with a button</p>   
         <div style="position: absolute; top: 20%; left:40%;" ng-controller="PaginationController">
 
-        <button class="button" create-pages results="results" number-per-page="5" ng-click="getResults();showPaginate=true" pages="pages" page-content="pageContent">Click Me!</button> 
+        <button class="button" create-pages results="results" number-per-page="5" ng-click="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit=15 >Click Me!</button> 
 
             <div ng-show="showPaginate">
                 Current page: {{getCurrentPage()}}<br>
                 <ul style="position: relative; top: 30px" class="pagination" >
                     
-                    <li ng-class="{disabled: isFirstPage()}" pagination-left page-content="pageContent"><a>&laquo;</a></li>
+                    <li ng-class="{disabled: isFirstPage()}" pagination-left ><a>&laquo;</a></li>
                     
-                    <li pagination ng-class="{active: page == getCurrentPage() }" page-content="pageContent" page="{{page}}" ng-repeat="page in pages">
+                    <li pagination ng-class="{active: page == getCurrentPage() }" page="{{page}}" ng-repeat="page in pages">
                         <a>{{page}}</a>
                     </li>
                     
-                    <li ng-class="{disabled: isLastPage()}" pagination-right page-content="pageContent"><a>&raquo;</a></li>
+                    <li ng-class="{disabled: isLastPage()}" pagination-right ><a>&raquo;</a></li>
                 
                 </ul>
                 <table class="table">
