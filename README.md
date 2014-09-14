@@ -12,4 +12,4 @@ Can be plugged into any css framework/use your own styles for pagination.
 
 See examples on how it has been used with twitter bootstrap css.
 
-http://jsfiddle.net/e3bq15kj/2/
+http://jsfiddle.net/e3bq15kj/5/
