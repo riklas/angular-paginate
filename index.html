@@ -23,15 +23,17 @@
         <button class="button" create-pages results="results" number-per-page="5" ng-click="getResults();showPaginate=true" pages="pages" page-content="pageContent">Click Me!</button> 
 
             <div ng-show="showPaginate">
-                {{currentPage}}
+                Current page: {{getCurrentPage()}}<br>
                 <ul style="position: relative; top: 30px" class="pagination" >
-                    <li><a pagination-left href>&laquo;</a></li>
                     
-                    <li ng-class="{active: page == currentPage}" pagination page-content="pageContent" page="{{page}}" current-page="currentPage" ng-repeat="page in pages">
+                    <li ng-class="{disabled: isFirstPage()}" pagination-left page-content="pageContent"><a>&laquo;</a></li>
+                    
+                    <li pagination ng-class="{active: page == getCurrentPage() }" page-content="pageContent" page="{{page}}" ng-repeat="page in pages">
                         <a>{{page}}</a>
                     </li>
                     
-                    <li><a pagination-right href>&raquo;</a></li>
+                    <li ng-class="{disabled: isLastPage()}" pagination-right page-content="pageContent"><a>&raquo;</a></li>
+                
                 </ul>
                 <table class="table">
                     <thead>
