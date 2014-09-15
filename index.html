@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html ng-app="angular-paginate">
-    <!-- css -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <title>angular-pagination</title>
-    <style>
-        .pagination:hover{
-            cursor: pointer
-        }
-        
-        button{
-            color: white;
-            background: blue;
-        }
-        .table{
-            width: 400px;
-        }
-    </style>
-    <div ng-controller="MainController">
-        <p>Pagination Controlled with a button</p>   
-        <div style="position: absolute; top: 20%; left:40%;" ng-controller="PaginationController">
+    <head>
+        <!-- css -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <title>angular-pagination</title>
+        <style>
+            .pagination:hover{
+                cursor: pointer
+            }
+            
+            button{
+                color: white;
+                background: blue;
+            }
+            .table{
+                width: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <div ng-controller="MainController">
+            <p>Pagination Controlled with a button</p>   
+            <div style="position: absolute; top: 20%; left:40%;" ng-controller="PaginationController">
 
-        <button class="button" create-pages results="results" number-per-page="5" ng-dblclick="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit=15 binding="dblclick">Click Me!</button> 
+            <button class="button" create-pages results="results" number-per-page="5" ng-dblclick="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit=15 binding="dblclick">Click Me!</button> 
 
-            <div ng-show="showPaginate">
-                Current page: {{getCurrentPage()}}<br>
-                <ul style="position: relative; top: 30px" class="pagination" >
+                <div ng-show="showPaginate">
+                    Current page: {{getCurrentPage()}}<br>
+                    <ul style="position: relative; top: 30px" class="pagination" >
+                        
+                        <li ng-class="{disabled: isFirstPage()}" pagination-left ><a>&laquo;</a></li>
+                        
+                        <li pagination ng-class="{active: page == getCurrentPage() }" page="{{page}}" ng-repeat="page in pages">
+                            <a>{{page}}</a>
+                        </li>
+                        
+                        <li ng-class="{disabled: isLastPage()}" pagination-right ><a>&raquo;</a></li>
                     
-                    <li ng-class="{disabled: isFirstPage()}" pagination-left ><a>&laquo;</a></li>
-                    
-                    <li pagination ng-class="{active: page == getCurrentPage() }" page="{{page}}" ng-repeat="page in pages">
-                        <a>{{page}}</a>
-                    </li>
-                    
-                    <li ng-class="{disabled: isLastPage()}" pagination-right ><a>&raquo;</a></li>
-                
-                </ul>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Player</th>
-                            <th>Average</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="content in pageContent">
-                            <td>{{content.name}}</td>
-                            <td>{{content.avg}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    </ul>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Average</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="content in pageContent">
+                                <td>{{content.name}}</td>
+                                <td>{{content.avg}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- js -->
-    <script type="text/javascript" src="js/angular.min.js"></script>
-    <script type="text/javascript" src="angular-paginate.js"></script>
+        <!-- js -->
+        <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+        <script type="text/javascript" src="js/angular-paginate.js"></script>
+    </body>
 </html>
