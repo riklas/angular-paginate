@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="angular-paginate">
+<html ng-app="pagination-example">
     <head>
         <!-- css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -23,10 +23,9 @@
             <p>Pagination Controlled with a button</p>   
             <div style="position: absolute; top: 20%; left:40%;" ng-controller="PaginationController">
 
-            <button class="button" create-pages results="results" number-per-page="5" ng-dblclick="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit=15 binding="dblclick">Click Me!</button> 
+            <button class="button" create-pages results="results" number-per-page="10" ng-dblclick="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit=15 binding="dblclick">Click Me!</button> 
 
                 <div ng-show="showPaginate">
-                    Current page: {{getCurrentPage()}}<br>
                     <ul style="position: relative; top: 30px" class="pagination" >
                         
                         <li ng-class="{disabled: isFirstPage()}" pagination-left ><a>&laquo;</a></li>
@@ -42,13 +41,13 @@
                         <thead>
                             <tr>
                                 <th>Player</th>
-                                <th>Average</th>
+                                <th>Goals</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="content in pageContent">
                                 <td>{{content.name}}</td>
-                                <td>{{content.avg}}</td>
+                                <td>{{content.goals}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -58,6 +57,7 @@
 
         <!-- js -->
         <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/angular-paginate.js"></script>
     </body>
 </html>
