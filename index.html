@@ -5,52 +5,75 @@
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <title>angular-pagination</title>
         <style>
+            .header {
+                height: 100px;
+            }
             .pagination:hover{
                 cursor: pointer
             }
-            
-            button{
-                color: white;
-                background: blue;
-            }
             .table{
                 width: 400px;
+            }
+            .panel-info {
+                font-family: 'Noto serif', serif;
+                font-size: 2.0rem;
+                text-align: center;
+            }
+            input[type="number"]{
+                width: 50px;
+            }
+            input[type="text"]{
+                width: 150px;
             }
         </style>
     </head>
     <body>
         <div ng-controller="MainController">
-            <p>Pagination Controlled with a button</p>   
-            <div style="position: absolute; top: 20%; left:40%;" ng-controller="PaginationController">
+            <h3 class="header">Pagination Controlled with a button<hr></h3> 
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5">
+                        <div class="row"><h4>Test the directive below</h4></div>
+                        <div class="row panel panel-info">
+                            <div class="row">&lt;button create-pages</div>
+                            <div class="row">number-per-page=<input type="number" ng-model="interactiveNpp"/></div>
+                            <div class="row">binding=<input type="text" ng-model="interactiveBinding"/></div>
+                            &nbsp;&gt;
+                        </div>
+                        <button class="col-lg-offset-8 col-md-offset-8 btn btn-primary btn-lg" create-pages results="results" number-per-page="{{interactiveNpp}}" ng-dblclick="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit=15 binding="{{interactiveBinding}}">Paginate!</button> 
+                    </div>
 
-            <button class="button" create-pages results="results" number-per-page="10" ng-dblclick="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit=15 binding="dblclick">Click Me!</button> 
+                    <div class="col-lg-7 col-md-7" ng-controller="PaginationController">
 
-                <div ng-show="showPaginate">
-                    <ul style="position: relative; top: 30px" class="pagination" >
-                        
-                        <li ng-class="{disabled: isFirstPage()}" pagination-left ><a>&laquo;</a></li>
-                        
-                        <li pagination ng-class="{active: page == getCurrentPage() }" page="{{page}}" ng-repeat="page in pages">
-                            <a>{{page}}</a>
-                        </li>
-                        
-                        <li ng-class="{disabled: isLastPage()}" pagination-right ><a>&raquo;</a></li>
-                    
-                    </ul>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Player</th>
-                                <th>Goals</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="content in pageContent">
-                                <td>{{content.name}}</td>
-                                <td>{{content.goals}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                        <div ng-show="showPaginate">
+                            <ul style="position: relative; top: 30px" class="pagination" >
+                                
+                                <li ng-class="{disabled: isFirstPage()}" pagination-left ><a>&laquo;</a></li>
+                                
+                                <li pagination ng-class="{active: page == getCurrentPage() }" page="{{page}}" ng-repeat="page in pages">
+                                    <a>{{page}}</a>
+                                </li>
+                                
+                                <li ng-class="{disabled: isLastPage()}" pagination-right ><a>&raquo;</a></li>
+                            
+                            </ul>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th>Goals</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="content in pageContent">
+                                        <td>{{content.name}}</td>
+                                        <td>{{content.goals}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

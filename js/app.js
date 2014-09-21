@@ -112,5 +112,11 @@ angular.module("pagination-example", ["angular-paginate"])
     // called to simulate dynamic results
     $scope.getResults = function(){
         $scope.results = data;
-    }
+    };
+
+
+    // initialise interactive directive input fields
+    $scope.interactiveNpp = 10
+    $scope.interactiveBinding = "dblclick"
+
 }])
