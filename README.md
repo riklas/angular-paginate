@@ -30,5 +30,5 @@ angular.module('myApp', ['angular-paginate']);
 ```
 
 ## Browser Support
-Chrome
-Firefox
+* Chrome
+* Firefox
