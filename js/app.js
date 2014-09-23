@@ -1,4 +1,4 @@
-angular.module("pagination-example", ["angular-paginate"])
+angular.module("pagination-example", ["angular-paginate", "ui.bootstrap"])
 
 .controller("MainController", ["$scope", function($scope){
     
@@ -114,9 +114,26 @@ angular.module("pagination-example", ["angular-paginate"])
         $scope.results = data;
     };
 
+    $scope.bindings = ["click", "dblclick", "blur", "change", "focus", "keydown", "keyup", "keypress", "mousedown", 
+    "mouseenter", "mouseleave", "mousemove", "mouseover", "mouseup"];
 
     // initialise interactive directive input fields
     $scope.interactiveNpp = 10
     $scope.interactiveBinding = "dblclick"
 
+    // function called when interactive directive 'test' button has been clicked
+    $scope.changeDirective = function(){
+        $scope.showPaginate = false;
+        if (checkMember($scope.interactiveBinding)){      // if member is valid
+
+        }
+    };
+
+    var checkMember = function(binding){
+        var exists = false;
+        angular.forEach($scope.bindings, function(value, key){
+            if(angular.equals(value, binding)) exists = true;
+        });
+        return exists;
+    };
 }])
