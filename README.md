@@ -1,5 +1,5 @@
-angular-paginate
-================
+# angular-paginate
+
 
 Module that provides UI-agnostic dynamic or static pagination using angular js.
 
@@ -12,7 +12,23 @@ Can be plugged into any css framework/use your own styles for pagination.
 - Supports static or dynamic data sets (data populated through REST)
 
 
+## Demo
+See examples on how it has been used with twitter bootstrap css:
 
-See examples on how it has been used with twitter bootstrap css.
+http://riklas.github.io/angular-paginate
 
 http://jsfiddle.net/rikin5/eps38o0m/3/
+
+## Setup
+
+Only AngularJs is required
+
+1. Download angular-paginate.js 
+2. Import it in your angular application
+  ```javascript
+    angular.module('myApp', ['angular-paginate']);
+  ```
+
+## Browser Support
+Chrome
+Firefox
