@@ -21,13 +21,13 @@ http://jsfiddle.net/rikin5/eps38o0m/3/
 
 ## Setup
 
-Only AngularJs is required
+Only AngularJs is required to use this module, css frameworks can be complimentary.
 
-1. Download angular-paginate.js 
-2. Import it in your angular application
-  ```javascript
-    angular.module('myApp', ['angular-paginate']);
-  ```
+Download angular-paginate.js and import it in your angular application
+
+```javascript
+angular.module('myApp', ['angular-paginate']);
+```
 
 ## Browser Support
 Chrome
