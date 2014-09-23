@@ -32,4 +32,4 @@ angular.module('myApp', ['angular-paginate']);
 ## Browser Support
 * Chrome
 * Firefox
-* IE - not tested
+* IE - **not tested**
