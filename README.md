@@ -28,6 +28,62 @@ Download angular-paginate.js and import it in your angular application
 ```javascript
 angular.module('myApp', ['angular-paginate']);
 ```
+## Usage
+angular-paginate is based on the usage of directives:
+
+### create-pages directive
+
+```html
+<button create-pages results="results" number-per-page="10" ng-click="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit="15" binding="mouseup">Paginate!</button>
+```
+
+* ```results```:  binds to list that holds your pagination data. **required**
+* ```number-per-page```:  set number of data items to be displayed per page. **required**
+* ```pages```: binds to list that will hold page numbers that you will display. **required**
+* ```page-content```: binds to list that will hold data items for a single page. **required**
+* ```page-limit```: maximum page number. optional (default = 15)
+* ```binding```: event (click, mouseup etc.) that will trigger pagination. optional (default = "click")
+                 **Note:** this event must correspond with angular's event binding directive. So if binding="click", you must                     include ng-click in the directive. If binding="mouseover", ng-mouseover.
+* ```ng-click```: angular directive that should correspond to the binding attribute, to populate results list and display pagination when the specified event is fired.
+
+
+### pagination directive
+
+set disabled css class on left arrow pagination by calling convenience method isFirstPage
+```html
+<li ng-class="{disabled: isFirstPage()}" pagination-left ><a>&laquo;</a></li>
+```
+
+set pagination to display numbers from your pages list provided in the create-pages directive, and set active css class calling convenience method getCurrentPage().
+```html
+<li pagination ng-class="{active: page == getCurrentPage() }" page="{{page}}" ng-repeat="page in pages">
+    <a>{{page}}</a>
+</li>
+```
+
+set disabled css class on right arrow pagination by calling convenience method isLastPage
+```html
+<li ng-class="{disabled: isLastPage()}" pagination-right ><a>&raquo;</a></li>
+```
+
+display content from your page-content list provided in the create-pages directive
+```html
+<table class="table">
+  <thead>
+      <tr>
+          <th>Player</th>
+          <th>Goals</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr ng-repeat="content in pageContent">
+          <td>{{content.name}}</td>
+          <td>{{content.goals}}</td>
+      </tr>
+  </tbody>
+</table>
+```
+
 
 ## Browser Support
 * Chrome
