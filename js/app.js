@@ -119,7 +119,7 @@ angular.module("pagination-example", ["angular-paginate", "ui.bootstrap"])
 
     // initialise interactive directive input fields
     $scope.interactiveNpp = 10
-    $scope.interactiveBinding = "dblclick"
+    $scope.interactiveBinding = "click"
 
     // function called when interactive directive 'test' button has been clicked
     $scope.changeDirective = function(){

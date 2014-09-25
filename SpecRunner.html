@@ -4,29 +4,25 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Jasmine Spec Runner v2.0.2</title>
 
+  <!-- Jasmine css -->
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.2/jasmine_favicon.png">
   <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.2/jasmine.css">
 
+  <!-- Jasmine js -->
   <script type="text/javascript" src="lib/jasmine-2.0.2/jasmine.js"></script>
   <script type="text/javascript" src="lib/jasmine-2.0.2/jasmine-html.js"></script>
   <script type="text/javascript" src="lib/jasmine-2.0.2/boot.js"></script>
+
+  <!-- Vendor -->
+  <script type="text/javascript" src="lib/angular/angular.min.js"></script>
+  <script type="text/javascript" src="lib/angular/angular-mocks.js"></script>
 
   <!-- include source files here... -->
   <script type="text/javascript" src="js/angular-paginate.js"></script>
 
   <!-- include spec files here... -->
-  <script type="text/javascript" src="spec/paginationControllerSpec.js"></script>
+  <script type="text/javascript" src="spec/pagination-controller-spec.js"></script>
 </head>
 <body>
-  <!-- bootstrap jasmine -->
-  <script>
-    var jasmineEnv = jasmine.getEnv();
-
-    // adds detailed HTML-formatted results for each spec
-    jasmineEnv.addReporter(new jasmine.HtmlReporter());
-
-    // execute tests
-    jasmineEnv.execute(); 
-  </script>
 </body>
 </html>
