@@ -88,4 +88,4 @@ display content from your page-content list provided in the create-pages directi
 ## Browser Support
 * Chrome
 * Firefox
-* IE - **not yet tested**
+* IE - **not tested**
