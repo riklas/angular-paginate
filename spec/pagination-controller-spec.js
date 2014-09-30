@@ -95,4 +95,34 @@ describe("PaginationController", function(){
 		expect(stateServiceMock.setPageContent).toHaveBeenCalledWith(pageContent);
 	});
 
+	it("should clear previous page content when getPageContent is called", function(){
+		var pageContent = ['a','b','c'];
+		stateServiceMock.getNumberPerPage.and.returnValue(3);
+		stateServiceMock.getPageContent.and.returnValue(pageContent);
+
+		$scope.getPageContent(2);
+
+		expect(pageContent.length).toEqual(0);
+	});
+
+	it("should display all results in page content when getPageContent is called and there are less results than number per page", function(){
+		var pageContent = [];
+		stateServiceMock.getNumberPerPage.and.returnValue(10);
+		stateServiceMock.getResults.and.returnValue(['a','b','c']);
+		stateServiceMock.getPageContent.and.returnValue(pageContent);
+		$scope.getPageContent(1);
+
+		expect(pageContent).toEqual(['a','b','c']);
+	});
+
+	it("should display new page content when getPageContent is called and there are less results than number per page", function(){
+		var pageContent = [];
+		stateServiceMock.getNumberPerPage.and.returnValue(2);
+		stateServiceMock.getResults.and.returnValue(['a','b','c']);
+		stateServiceMock.getPageContent.and.returnValue(pageContent);
+		$scope.getPageContent(2);
+
+		expect(pageContent).toEqual(['c']);
+	});
+
 });

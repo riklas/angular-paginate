@@ -98,7 +98,6 @@ angular.module("angular-paginate", [])
         while(pageContent.length > 0) pageContent.pop();      // clear previous page content 
         
         if(results){
-
             // if there are less results than number per page, display all results in pageContent
             if((startIndex + numberPerPage - 1) > results.length){
                 for(var i = startIndex; i < results.length; i++){
@@ -107,6 +106,7 @@ angular.module("angular-paginate", [])
             } else {
                 for(var i = startIndex; i < (numberPerPage + startIndex); i++){
                     pageContent.push(results[i]);
+                    if(i = results.length) break;
                 };
             };
         };
