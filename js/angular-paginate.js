@@ -106,7 +106,7 @@ angular.module("angular-paginate", [])
             } else {
                 for(var i = startIndex; i < (numberPerPage + startIndex); i++){
                     pageContent.push(results[i]);
-                    if(i === results.length) break;
+                    if(i === (results.length - 1)) break;
                 };
             };
         };
