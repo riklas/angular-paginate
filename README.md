@@ -19,6 +19,12 @@ http://riklas.github.io/angular-paginate
 
 http://jsfiddle.net/rikin5/eps38o0m/3/
 
+
+## Browser Support
+* Chrome
+* Firefox
+* IE - **not tested**
+
 ## Setup
 
 Only AngularJs is required to use this module, css frameworks can be complimentary.
@@ -33,7 +39,7 @@ angular-paginate is based on the usage of directives:
 
 ### create-pages directive
 
-Used to display initial pagination. Must be setup before the pagination directive in the DOM element that leads to pagination creation.
+Used to display initial pagination. Must be setup before the pagination directive and in the DOM element that leads to pagination creation.
 
 ```html
 <button create-pages results="results" number-per-page="10" ng-click="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit="15" binding="mouseup">Paginate!</button>
@@ -86,8 +92,3 @@ display content from your page-content list provided in the create-pages directi
 </table>
 ```
 
-
-## Browser Support
-* Chrome
-* Firefox
-* IE - **not tested**
