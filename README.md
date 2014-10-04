@@ -33,6 +33,8 @@ angular-paginate is based on the usage of directives:
 
 ### create-pages directive
 
+Used to display initial pagination. Must be setup before the pagination directive in the DOM element that leads to pagination creation.
+
 ```html
 <button create-pages results="results" number-per-page="10" ng-click="getResults();showPaginate=true" pages="pages" page-content="pageContent" page-limit="15" binding="mouseup">Paginate!</button>
 ```
