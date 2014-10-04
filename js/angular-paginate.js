@@ -107,7 +107,7 @@ angular.module("angular-paginate", [])
                 for(var i = startIndex; i < (numberPerPage + startIndex); i++){
                     pageContent.push(results[i]);
                     if(i === (results.length - 1)) break;
-                };
+                };  
             };
         };
     };
@@ -202,11 +202,11 @@ angular.module("angular-paginate", [])
             elem.bind("click", function(){
                 var currentPage = scope.getCurrentPage();
                 
-                if(currentPage !== 1){
+                if(currentPage > 1){
                     scope.setCurrentPage( --currentPage );          // move to previous page
                     scope.getPageContent(currentPage);              // reset content to previous page
                     scope.$apply();                                 // apply changes
-                }
+                };
             });
         }
     };
@@ -221,7 +221,7 @@ angular.module("angular-paginate", [])
             elem.bind("click", function(){
                 var currentPage = scope.getCurrentPage();
                 
-                if(currentPage !== scope.getPageMax()){
+                if(currentPage < scope.getPageMax()){
                         scope.setCurrentPage(++currentPage);        // move to next page
                         scope.getPageContent(currentPage);          // reset contents to next page
                         scope.$apply();                             // apply changes

@@ -1,4 +1,4 @@
-describe("PaginationController", function(){
+describe("Pagination Controller", function(){
 	var $scope, ctrl;
 	var stateServiceMock;
 
