@@ -23,7 +23,7 @@ http://jsfiddle.net/rikin5/eps38o0m/3/
 ## Browser Support
 * Chrome
 * Firefox
-* IE - **not tested**
+* IE8+
 
 ## Setup
 
