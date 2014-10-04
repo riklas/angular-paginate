@@ -9,7 +9,7 @@ Can be plugged into any css framework/use your own styles for pagination.
 - UI agnostic pagination - no dependencies except angular js
 - Display pagination on double-click, mouseover, focus, blur and all supported angular event bindings
 - Ease-of-use - implemented as angular directives
-- Supports static or dynamic data sets (data populated through REST)
+- Supports static or dynamic data sets
 
 
 ## Demo
